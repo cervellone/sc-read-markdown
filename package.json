@@ -1,0 +1,25 @@
+{
+  "name": "sc-read-markdown",
+  "version": "1.0.0",
+  "description": "Node.js middleware that reads markdown files from a directory and creates a JSON object with the content in res.markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cervellone/sc-read-markdown.git"
+  },
+  "keywords": [
+    "Markdown",
+    "JSON",
+    "dir",
+    "directory"
+  ],
+  "author": "Stefano Casola",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cervellone/sc-read-markdown/issues"
+  },
+  "homepage": "https://github.com/cervellone/sc-read-markdown#readme"
+}
