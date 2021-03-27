@@ -20,13 +20,22 @@ const readMarkdownFromDirectory = (dir) => {
     }
 }
 
-function getAllFiles(dir, files){
+async function getAllFiles(dir, files){
     var promises = [];
+
     files.forEach((file)=>{
         fullPath = path.join(dir, file);
         promises.push(getFile(fullPath));
     });
-    return Promise.all(promises);
+
+    Promise.all(promises)
+        .then(data => {
+            console.log(data);
+            return data;            
+        })
+        .catch(err =>{
+            console.log(err);
+        });
 }
 
 //returns a promise for the reading file
