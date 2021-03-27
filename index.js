@@ -12,6 +12,7 @@ const readMarkdownFromDirectory = (dir) => {
         getRenderedMarkdownFromDirectory(dir) //gets the markdown data of path dir
             .then(data => {
                 req.markdown = data;
+                console.log(data);
                 next();  //calls next middleware
             })
     }
@@ -24,23 +25,32 @@ const readMarkdownFromDirectory = (dir) => {
  * @param {string} dir the directory path to load the .md files from
  */
 async function getRenderedMarkdownFromDirectory(dir){
+    return new Promise((resolve, reject) => {
     fs.readdir(dir) //returns list of file od directories in dir
         .then(files =>{
             console.log(files);
             return getAllFiles(dir, files); //returns the array with the data of all the files in dir
         })
         .then(data =>{
-            var markdownJsonObjects = new Array(); // array to save the JSON objects wiht the .md data
-            data.forEach(dat =>{ //itterates over all files data
-                markdownJsonObjects.push(renderMarkdownToJsonObject(dat)); //creates an object that includes the rendered .md text and the title
-            });
+            // array to save the JSON objects wiht the .md data
+            
+                var markdownJsonObjects = new Array(); 
+                data.forEach(dat =>{ //itterates over all files data
+                    markdownJsonObjects.push(renderMarkdownToJsonObject(dat)); //creates an object that includes the rendered .md text and the title
+                });
+
+                if(typeof markdownJsonObjects !== 'undefined'){
+                    resolve(markdownJsonObjects);
+                }else{
+                    reject('no data created');
+                }
+        })
             //console.log(markdownJsonObjects);
-            return markdownJsonObjects;
         }).catch(err =>{
             console.log(err);
             return "INVALID DIRECTORY";
         })
-}
+    };
 
 /**
  * Renders the text in the markdown syntax to a html format inside a js object
@@ -89,5 +99,21 @@ async function getFile(path){
     return result;
 }
 
+
+test('./test');
+
+function test(dir){
+    getRenderedMarkdownFromDirectory(dir) //gets the markdown data of path dir
+            .then(data => {
+                var req = {};
+                req.markdown = data;
+                console.log(data);
+                console.log(req.markdown);
+                //next();  //calls next middleware
+            })
+            .catch(error =>{
+                console.log(error);
+            });
+}
 
 module.exports = {readMarkdownFromDirectory};
