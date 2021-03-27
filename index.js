@@ -9,8 +9,11 @@ const path = require('path');
  */
 const readMarkdownFromDirectory = (dir) => {
     return async(req, res, next) => {
-        req.markdown = await getRenderedMarkdownFromDirectory(dir); //gets the markdown data of path dir
-        next();  //calls next middleware
+        getRenderedMarkdownFromDirectory(dir) //gets the markdown data of path dir
+            .then(data => {
+                req.markdown = data;
+                next();  //calls next middleware
+            })
     }
 }
 
